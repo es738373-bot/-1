@@ -1,0 +1,170 @@
+1)Дана строка 'AaBbCcDd'. Используя срезы с шагом получите две строки: только с заглавными и только со
+строчными буквами. Выведите их на экран.
+a)Код c++:
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Функция для фильтрации строки по регистру символа
+string filter_string(const string& input, bool is_upper_case = true)
+{
+    // Новая пустая строка для результата
+    string result;
+    
+    for(char ch : input)
+    {
+        if ((is_upper_case && isupper(ch)) || (!is_upper_case && islower(ch)))
+            result += ch;
+    }
+    return result;
+}
+
+int main()
+{
+    string str = "AaBbCcDd";
+
+    // Получаем строку с заглавными буквами
+    string upper_str = filter_string(str);
+
+    // Получаем строку со строчными буквами
+    string lower_str = filter_string(str, false); // второй аргумент false означает, что берем строчные буквы
+
+    cout << "Заглавные буквы: " << upper_str << endl;
+    cout << "Строчные буквы: " << lower_str << endl;
+
+    return 0;
+}
+b)Код JAVA:
+public class Main {
+    public static void main(String[] args) {
+        String originalString = "AaBbCcDd"; // Исходная строка
+        
+        // Извлекаем заглавные буквы
+        String uppercaseLetters = extractUppercase(originalString);
+        
+        // Извлекаем строчные буквы
+        String lowercaseLetters = extractLowercase(originalString);
+        
+        System.out.println("Только заглавные буквы: " + uppercaseLetters);
+        System.out.println("Только строчные буквы: " + lowercaseLetters);
+    }
+
+    // Метод извлекает только заглавные буквы из строки
+    private static String extractUppercase(String s) {
+        StringBuilder result = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isUpperCase(c)) { // Проверяем, является ли символ заглавным
+                result.append(c);
+            }
+        }
+        return result.toString(); // Преобразование обратно в строку
+    }
+
+    // Метод извлекает только строчные буквы из строки
+    private static String extractLowercase(String s) {
+        StringBuilder result = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (Character.isLowerCase(c)) { // Проверяем, является ли символ строчным
+                result.append(c);
+            }
+        }
+        return result.toString(); // Преобразование обратно в строку
+    }
+}
+Результат программ:
+Только заглавные буквы: ABCD
+Только строчные буквы: abcd
+
+2)Дан список ['a', '1', 'b', '2', 'c', '3']. Разбейте его на два списка: только с буквами и только с числами. Сам список
+затем удалите, а новые списки выведите на экран, каждый на отдельной строке.
+a) Код на С++:
+  #include <iostream>
+#include <vector>
+#include <algorithm>
+
+bool is_digit(const std::string &s) {
+    return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
+}
+
+int main() {
+    std::vector<std::string> list = {"a", "1", "b", "2", "c", "3"};
+
+    std::vector<std::string> letters;     // Список для хранения букв
+    std::vector<std::string> numbers;     // Список для хранения чисел
+
+    // Перебираем элементы исходного списка и распределяем их по спискам
+    for (const auto &item : list) {
+        if (is_digit(item)) {
+            numbers.push_back(item);      // Добавляем числа
+        } else {
+            letters.push_back(item);      // Добавляем буквы
+        }
+    }
+
+    // Удаление исходного списка
+    list.clear();
+
+    // Выводим новый список с буквами
+    std::cout << "Список с буквами: ";
+    for (const auto &letter : letters) {
+        std::cout << letter << " ";
+    }
+    std::cout << "\n";
+
+    // Выводим новый список с цифрами
+    std::cout << "Список с числами: ";
+    for (const auto &number : numbers) {
+        std::cout << number << " ";
+    }
+    std::cout << "\n";
+
+    return 0;
+}
+B) Код на java: 
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("1");
+        list.add("b");
+        list.add("2");
+        list.add("c");
+        list.add("3");
+
+        List<String> letters = new ArrayList<>();       // Список для букв
+        List<String> numbers = new ArrayList<>();       // Список для чисел
+
+        // Распределяем элементы исходного списка по новым спискам
+        for (String item : list) {
+            if (item.matches("\\d+")) {               // Проверяем, является ли строка числом
+                numbers.add(item);                     // Число добавляем в список чисел
+            } else {
+                letters.add(item);                     // Букву добавляем в список букв
+            }
+        }
+
+        // Уничтожаем исходный список
+        list.clear();
+
+        // Выводим список с буквами
+        System.out.print("Список с буквами: ");
+        for (String letter : letters) {
+            System.out.print(letter + " ");
+        }
+        System.out.println();
+
+        // Выводим список с числами
+        System.out.print("Список с числами: ");
+        for (String number : numbers) {
+            System.out.print(number + " ");
+        }
+        System.out.println();
+    }
+}
+Результат программ:
+Список с буквами: a b c 
+Список с числами: 1 2 3
